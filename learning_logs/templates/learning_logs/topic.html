@@ -2,30 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>xiangxi</title>
+    <title>具体topic</title>
 </head>
 <body>
 {% extends "learning_logs/base.html" %}
+{% block header %}
+    <h1>Topic</h1>
+{% endblock header %}
 {% block content %}
-    <p>Topic:{{ topic }}</p>
-    <p>Enteries:</p>
     <p>
       <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
     </p>
-    <ul>
     {% for entry in entries %}
-      <li>
-        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-        <p>{{ entry.text|linebreaks }}</p>
-      <p>
-          <a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a>
-      </p>
-      </li>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>
+            {{ entry.date_added|date:'M d, Y H:i' }}
+                <small>
+                    <a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a>
+                </small>
+            </h3>
+        </div>
+        <div class="panel-body  ">
+            <p>{{ entry.text|linebreaks }}</p>
+        </div>
+    </div>
+
     {% empty %}
-      <li>There are no entries for this topic
-      </li>
+      There are no entries for this topic
     {% endfor %}
-    </ul>
 {% endblock content %}
 </body>
 </html>
